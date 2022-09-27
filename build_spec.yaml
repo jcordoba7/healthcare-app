@@ -55,11 +55,11 @@ steps:
       echo The workspace is ${OCI_WORKSPACE_DIR}
       cd ${OCI_WORKSPACE_DIR}/healthcare-app
       #install apache
-      sudo yum install -y httpd
-      sudo systemctl enable httpd
-      sudo systemctl restart httpd
-      sudo firewall-cmd --add-service=http --permanent
-      sudo firewall-cmd --reload
+      yum install -y httpd
+      systemctl enable httpd
+      systemctl restart httpd
+      firewall-cmd --add-service=http --permanent
+      firewall-cmd --reload
       echo "apache VERSION: $(httpd -v)"
     onFailure:
       - type: Command
@@ -74,9 +74,9 @@ steps:
     name: "PHP install"
     command: |
       cd ${OCI_WORKSPACE_DIR}/healthcare_app
-      sudo yum install -y oracle-php-release-el7
-      sudo yum install -y php
-      sudo systemctl restart httpd
+      yum install -y oracle-php-release-el7
+      yum install -y php
+      systemctl restart httpd
       echo "PHP VERSION: $(php -v)"
     onFailure:
       - type: Command
@@ -91,8 +91,8 @@ steps:
     name: "Run Tests"
     command: |
       cd ${OCI_WORKSPACE_DIR}/healthcare_app
-      sudo systemctl status
-      # install phpunit
+      systemctl status
+#      # install phpunit
 #      sudo wget https://phar.phpunit.de/phpunit-6.5.phar
 #      echo "PHPunit version: $(php phpunit-6.5.phar --version)"
 
