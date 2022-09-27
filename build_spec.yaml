@@ -38,7 +38,7 @@ steps:
       echo OCIR_REGION is $OCIR_REGION
       export OCIR_STORAGE_NAMESPACE=$OCIR_STORAGE_NAMESPACE_VAULT
       echo OCIR_STORAGE_NAMESPACE is $OCIR_STORAGE_NAMESPACE
-      echo Image will be stored to ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}devops/node-express:${BUILDRUN_VERSION}
+      echo Image will be stored to ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}devops/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
     onFailure:
       - type: Command
         timeoutInSeconds: 40
@@ -50,17 +50,17 @@ steps:
 
   - type: Command
     timeoutInSeconds: 600
-    name: "Install Node Prereqs"
+    name: "Install PHP Prereqs"
     command: |
       echo The workspace is ${OCI_WORKSPACE_DIR}
-      cd ${OCI_WORKSPACE_DIR}/node_express
-      # install nvmf
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-      nvm install lts/erbium
-      echo "NODE VERSION: $(node -v)"
-      echo "NPM VERSION: $(npm -v)"
+      cd ${OCI_WORKSPACE_DIR}/healthcare-app
+      #install apache
+      sudo yum install -y httpd
+      sudo systemctl enable httpd
+      sudo systemctl restart httpd
+      sudo firewall-cmd --add-service=http --permanent
+      sudo firewall-cmd --reload
+      echo "apache VERSION: $(httpd -v)"
     onFailure:
       - type: Command
         command: |
@@ -68,13 +68,16 @@ steps:
           echo "Failure successfully handled"
         timeoutInSeconds: 40
         runAs: root
-  
+ 
   - type: Command
     timeoutInSeconds: 600
-    name: "NPM install"
+    name: "PHP install"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/node_express
-      npm install
+      cd ${OCI_WORKSPACE_DIR}/healthcare_app
+      sudo yum install -y oracle-php-release-el7
+      sudo yum install -y php
+      sudo systemctl restart httpd
+      echo "PHP VERSION: $(php -v)"
     onFailure:
       - type: Command
         command: |
@@ -87,26 +90,25 @@ steps:
     timeoutInSeconds: 1200
     name: "Run Tests"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/node_express
-      npm test
+      cd ${OCI_WORKSPACE_DIR}/healthcare_app
+      sudo systemctl status
+      # install phpunit
+#      sudo wget https://phar.phpunit.de/phpunit-6.5.phar
+#      echo "PHPunit version: $(php phpunit-6.5.phar --version)"
 
   - type: Command
     timeoutInSeconds: 1200
     name: "Build container image"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/node_express
-      docker build --pull --rm -t node-express-getting-starter .
-      docker login --username jcordoba77 --password Legacyofkain7
-      docker tag node-express-getting-starter jcordoba77/dockerhub-repository:${BUILDRUN_VERSION}
-    #docker push jcordoba77/dockerhub-repository:${BUILDRUN_VERSION}
-
+      cd ${OCI_WORKSPACE_DIR}/healthcare_app
+      docker build --pull --rm -t healthcare-app .
 
 outputArtifacts:
-  - name: node_express_container_image
+  - name: healthcare_app_container_image
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
-    location: node-express-getting-starter:latest
+    location: healthcare-app:latest
   - name: deployment_yaml
     type: BINARY
-    location: ${OCI_WORKSPACE_DIR}/node_express/gettingstarted-manifest.yaml
+    location: ${OCI_WORKSPACE_DIR}/healthcare_app/oke-manifest.yaml
