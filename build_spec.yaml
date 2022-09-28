@@ -105,3 +105,4 @@ outputArtifacts:
   - name: ingressRules_yaml
     type: BINARY
     location: ${OCI_WORKSPACE_DIR}/healthcare_app/ingress.yaml
+#
