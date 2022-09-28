@@ -102,3 +102,6 @@ outputArtifacts:
   - name: deployment_yaml
     type: BINARY
     location: ${OCI_WORKSPACE_DIR}/healthcare_app/oke-manifest.yaml
+  - name: ingressRules_yaml
+    type: BINARY
+    location: ${OCI_WORKSPACE_DIR}/healthcare_app/ingress.yaml

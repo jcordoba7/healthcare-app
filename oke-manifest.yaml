@@ -1,0 +1,46 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ${namespace}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-app
+  namespace: ${namespace}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: healthcare-app
+  template:
+    metadata:
+      labels:
+        app: healthcare-app
+    spec:
+      containers:
+      - name: healthcare-container
+        image: ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}devops/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: healthcare-app-svc
+  namespace: ${namespace}
+spec:
+  selector:
+    app: healthcare-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
