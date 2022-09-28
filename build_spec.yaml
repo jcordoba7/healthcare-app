@@ -95,8 +95,7 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_WORKSPACE_DIR}/node_express
-      docker build --pull --rm -t node-express-getting-starter .
-      docker login --username jcordoba77 --password Legacyofkain7
+      docker build --pull --rm -t node-express-getting-starter .git add .
       docker tag node-express-getting-starter jcordoba77/dockerhub-repository:${BUILDRUN_VERSION}
     #docker push jcordoba77/dockerhub-repository:${BUILDRUN_VERSION}
 
