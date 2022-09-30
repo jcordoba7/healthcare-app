@@ -65,11 +65,6 @@
           </div>
         </nav>
       </div></header>
-    <?php
-      echo "Hello!<br>";
-      echo "<h1>Welcome to Developer News</h1><br>";
-      echo "This is a php block!<br>";
-    ?>
     <section class="u-align-left u-clearfix u-gradient u-section-1" id="carousel_0aeb">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-layout-wrap u-layout-wrap-1">
