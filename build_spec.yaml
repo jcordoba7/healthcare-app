@@ -61,12 +61,6 @@ steps:
     command: |
       echo The workspace is ${OCI_WORKSPACE_DIR}
       cd ${OCI_WORKSPACE_DIR}/healthcare-app
-#      install apache
-#      yum install -y httpd
-#      systemctl enable httpd
-#      systemctl restart httpd
-#      firewall-cmd --add-service=http --permanent
-#      firewall-cmd --reload
       echo "apache VERSION: $(httpd -v)"
     onFailure:
       - type: Command
@@ -81,9 +75,6 @@ steps:
     name: "PHP install"
     command: |
       cd ${OCI_WORKSPACE_DIR}/healthcare_app
-#      yum install -y oracle-php-release-el7
-#      yum install -y php
-#      systemctl restart httpd
       echo "PHP VERSION: $(php -v)"
     onFailure:
       - type: Command
