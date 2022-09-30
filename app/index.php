@@ -67,7 +67,7 @@
       </div></header>
     <?php
       echo "Hello!<br>";
-      echo "Welcome to Developer News<br>";
+      echo "<h1>Welcome to Developer News</h1><br>";
       echo "This is a php block!<br>";
     ?>
     <section class="u-align-left u-clearfix u-gradient u-section-1" id="carousel_0aeb">
