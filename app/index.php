@@ -75,7 +75,7 @@
               </div>
               <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-30 u-layout-cell-2">
                 <div class="u-container-layout u-valign-middle u-container-layout-2">
-                  <h5 class="u-text u-text-1" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Down">Medical Center Health</h5>
+                  <h5 class="u-text u-text-1" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Down">Medical Center Health (edited)</h5>
                   <h1 class="u-custom-font u-font-oswald u-text u-text-palette-1-base u-text-2" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Down">Highest Quality</h1>
                   <p class="u-text u-text-palette-5-dark-2 u-text-3" data-animation-name="fadeIn" data-animation-duration="1000" data-animation-direction="Down" data-animation-delay="250">To learn more about our clinical programs, browse our list of medical services alphabetically or search by keyword in the box below.<br>
                   </p>
