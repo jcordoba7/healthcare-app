@@ -12,7 +12,7 @@ env:
   # you can then access the value of that secret in your build_spec.yaml commands
   vaultVariables:
     OCIR_REGION_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaau2o4l2iahbs3u7i3j3zsjvc3hoczxgkca5buwqcsilnwpp2pfqna
-    OCIR_STORAGE_NAMESPACE_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaau2o4l2iaqxmlrqphtm6rqolio3anoo6q4qi3vbbisfsl5xbd36vq
+    OCIR_STORAGE_NAMESPACE_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaact4jh4iacnoyyq3nqhhk7fgmki6f77dlxwuncddc5ixgcb3345fq
   
   # exportedVariables are made available to use as parameters in sucessor Build Pipeline stages
   # For this Build to run, the Build Pipeline needs to have a BUILDRUN_VERSION parameter set
@@ -38,33 +38,31 @@ steps:
       echo OCIR_REGION is $OCIR_REGION
       export OCIR_STORAGE_NAMESPACE=$OCIR_STORAGE_NAMESPACE_VAULT
       echo OCIR_STORAGE_NAMESPACE is $OCIR_STORAGE_NAMESPACE
-      echo Image will be stored to ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}devops/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
+      echo Image will be stored to ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
     onFailure:
       - type: Command
-        timeoutInSeconds: 40
         command: |
           echo "Handling Failure"
           echo "Failure successfully handled"
-        timeoutInSeconds: 400
+        timeoutInSeconds: 40
         runAs: root      
 
   - type: Command
     timeoutInSeconds: 1200
     name: "Build container image"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/healthcare_app
-      docker build --pull --rm -t healthcare-app .
+      cd ${OCI_WORKSPACE_DIR}/${BUILD_SOURCE_NAME}
+      docker build --pull --rm -t ${BUILD_SOURCE_NAME}-image .
 
 outputArtifacts:
-  - name: healthcare_app_container_image
+  - name: ${BUILD_SOURCE_NAME}_container_image
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
-    location: healthcare-app:latest
+    location: ${BUILD_SOURCE_NAME}-image:latest
   - name: deployment_yaml
     type: BINARY
-    location: ${OCI_WORKSPACE_DIR}/healthcare_app/oke-manifest.yaml
+    location: ${OCI_WORKSPACE_DIR}/${BUILD_SOURCE_NAME}/manifests/oke-manifest.yaml
   - name: ingressRules_yaml
     type: BINARY
-    location: ${OCI_WORKSPACE_DIR}/healthcare_app/ingress.yaml
-#
+    location: ${OCI_WORKSPACE_DIR}/${BUILD_SOURCE_NAME}/manifests/ingress.yaml

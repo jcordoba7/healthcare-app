@@ -72,3 +72,14 @@ spec:
             name: healthcare-app-svc
             port:
               number: 80
+
+  - host: "para-luisa.demo-oci.tk"
+    http:
+      paths:
+      - pathType: Exact
+        path: /
+        backend:
+          service:
+            name: gift-app-svc
+            port:
+              number: 80

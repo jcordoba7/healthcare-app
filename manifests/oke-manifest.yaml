@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: healthcare-container
-        image: ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}devops/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
+        image: ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
