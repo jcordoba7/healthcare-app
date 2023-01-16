@@ -52,14 +52,14 @@ steps:
     name: "Build container image"
     command: |
       cd ${OCI_WORKSPACE_DIR}/${BUILD_SOURCE_NAME}
-      docker build --pull --rm -t ${BUILD_SOURCE_NAME}-image .
+      docker build --pull --rm -t new-image .
 
 outputArtifacts:
-  - name: ${BUILD_SOURCE_NAME}_container_image
+  - name: new_container_image
     type: DOCKER_IMAGE
     # this location tag doesn't effect the tag used to deliver the container image
     # to the Container Registry
-    location: ${BUILD_SOURCE_NAME}-image:latest
+    location: new-image:latest
   - name: deployment_yaml
     type: BINARY
     location: ${OCI_WORKSPACE_DIR}/${BUILD_SOURCE_NAME}/manifests/oke-manifest.yaml
