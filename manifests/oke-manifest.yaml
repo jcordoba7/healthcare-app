@@ -6,20 +6,20 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: healthcare-app
+  name: ${microservice_name}
   namespace: ${namespace}
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: healthcare-app
+      app: ${microservice_name}
   template:
     metadata:
       labels:
-        app: healthcare-app
+        app: ${microservice_name}
     spec:
       containers:
-      - name: healthcare-container
+      - name: ${microservice_name}-container
         image: ${OCIR_REGION}/${OCIR_STORAGE_NAMESPACE}/${MY_INITIALS}/${APP_MICROSERVICE}:${BUILDRUN_VERSION}
         imagePullPolicy: Always
         ports:
@@ -37,11 +37,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: healthcare-app-svc
+  name: ${microservice_name}-svc
   namespace: ${namespace}
 spec:
   selector:
-    app: healthcare-app
+    app: ${microservice_name}
   ports:
   - protocol: TCP
     port: 80
@@ -50,7 +50,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: healthcare-app-svc-lb
+  name: ${microservice_name}-svc-lb
   annotations:
     oci.oraclecloud.com/load-balancer-type: "lb"
     service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
@@ -64,4 +64,4 @@ spec:
       targetPort: 80
       name: http
   selector:
-    app: healthcare-app
+    app: ${microservice_name}
