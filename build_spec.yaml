@@ -11,8 +11,8 @@ env:
   # the value of a vaultVariable is the secret-id (in OCI ID format) stored in the OCI Vault service
   # you can then access the value of that secret in your build_spec.yaml commands
   vaultVariables:
-    OCIR_REGION_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaau2o4l2iahbs3u7i3j3zsjvc3hoczxgkca5buwqcsilnwpp2pfqna
-    OCIR_STORAGE_NAMESPACE_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaact4jh4iacnoyyq3nqhhk7fgmki6f77dlxwuncddc5ixgcb3345fq
+    OCIR_REGION_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaact4jh4iacnoyyq3nqhhk7fgmki6f77dlxwuncddc5ixgcb3345fq
+    OCIR_STORAGE_NAMESPACE_VAULT: ocid1.vaultsecret.oc1.phx.amaaaaaact4jh4iae4hgtdyl5orq4vcmcjvoljncvjw25pfnf3mncema5r6a
   
   # exportedVariables are made available to use as parameters in sucessor Build Pipeline stages
   # For this Build to run, the Build Pipeline needs to have a BUILDRUN_VERSION parameter set
