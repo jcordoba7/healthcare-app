@@ -1,5 +1,7 @@
 FROM php:8.0-apache
 
+LABEL maintainer = "Jonathan Cordoba"
+
 WORKDIR /var/www/html
 
 # Install app dependencies
